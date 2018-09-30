@@ -1,5 +1,3 @@
-process.env.DEBUG = 'angular6-demo-api:server';
-
 const createError = require('http-errors');
 const debug = require('debug')('angular6-demo-api:server');
 const express = require('express');
