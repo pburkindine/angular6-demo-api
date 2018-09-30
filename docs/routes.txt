@@ -1,0 +1,19 @@
+router                                                                                                         
+ ├── query                                         *                                                           
+ ├── expressInit                                   *                                                           
+ ├── corsMiddleware                                *                                                           
+ ├── initialize                                    *                                                           
+ ├── logger                                        *                                                           
+ ├── jsonParser                                    *                                                           
+ ├── urlencodedParser                              *                                                           
+ ├── router                                        /^\/api\/auth\/?(?=\/|$)/                                   
+ │   router                                                                                                    
+ │    ├── bound dispatch                           /register                                                   POST
+ │    │    └── <anonymous>                         /                                                           POST
+ │    │   
+ │    └── bound dispatch                           /login                                                      POST
+ │         └── <anonymous>                         /                                                           POST
+ │        
+ │   
+ ├── <anonymous>                                   *                                                           
+ └── <anonymous>                                   *                                                           
