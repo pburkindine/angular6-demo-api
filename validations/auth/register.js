@@ -1,19 +1,21 @@
 const _ = require('lodash');
 const Validator = require('validator');
 
-module.exports = function validateRegisterInput(data) {
-  let errors = {};
+module.exports = function validateRegisterInput(rawData) {
+  const errors = {};
+
+  const data = _.cloneDeep(rawData);
 
   data.name = !_.isEmpty(data.name) ? data.name : '';
   data.email = !_.isEmpty(data.email) ? data.email : '';
   data.password = !_.isEmpty(data.password) ? data.password : '';
 
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-    errors.name += 'Name must be between 2 and 30 characters.';
+    errors.name = 'Name must be between 2 and 30 characters.';
   }
 
   if (Validator.isEmpty(data.name)) {
-    errors.name += 'Name field is required.';
+    errors.name = 'Name field is required.';
   }
 
   if (!Validator.isEmail(data.email)) {
@@ -34,6 +36,6 @@ module.exports = function validateRegisterInput(data) {
 
   return {
     errors,
-    isValid: _.isEmpty(errors)
+    isValid: _.isEmpty(errors),
   };
 };

@@ -1,4 +1,7 @@
+process.env.DEBUG = 'angular6-demo-api:server';
+
 const createError = require('http-errors');
+const debug = require('debug')('angular6-demo-api:server');
 const express = require('express');
 const logger = require('morgan');
 const mongoose = require('mongoose');
@@ -7,7 +10,14 @@ const cors = require('cors');
 
 // Mongo
 const mongoConfig = require('./config/database');
-mongoose.connect(mongoConfig.database, { useNewUrlParser: true });
+
+mongoose
+  .connect(
+    mongoConfig.database,
+    { useNewUrlParser: true }
+  )
+  .then(() => debug('MongoDB Connected'))
+  .catch((err) => debug(err));
 
 // Routers
 const authRouter = require('./routes/auth');
@@ -24,26 +34,28 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/auth', authRouter);
 
 // Catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
-  console.log(err);
+app.use((err, req, res) => {
+  debug(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.json({ 'msg': 'An error occurred'})
+  res.json({ msg: 'An error occurred' });
 });
 
 // Log routes to console
 if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
   const path = require('path');
   const routerDumpPath = path.join(__dirname, './docs/routes.txt');
+  // eslint-disable-next-line global-require
   require('express-print-routes')(app, routerDumpPath);
 }
 

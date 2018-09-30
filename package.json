@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "serve": "./node_modules/.bin/nodemon"
+    "serve": "./node_modules/.bin/nodemon",
+    "lint": "./node_modules/.bin/eslint **/*.js",
+    "precommit": "npm run lint && lint-staged"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
@@ -12,6 +14,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-print-routes": "^1.0.0",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
@@ -22,7 +25,43 @@
     "validator": "^10.8.0"
   },
   "devDependencies": {
-    "express-print-routes": "^1.0.0",
-    "nodemon": "^1.18.4"
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "husky": "^1.0.1",
+    "lint-staged": "^7.3.0",
+    "nodemon": "^1.18.4",
+    "prettier": "^1.14.3",
+    "supports-color": "^5.5.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "./node_modules/.bin/prettier --single-quote --trailing-comma es5 --arrow-parens always --parser babylon --write",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "browser": false
+    },
+    "rules": {
+      "consistent-return": "off",
+      "no-underscore-dangle": "off",
+      "no-unused-vars": [
+        "warn"
+      ],
+      "no-var": [
+        "off"
+      ],
+      "one-var": [
+        "off"
+      ]
+    }
   }
 }

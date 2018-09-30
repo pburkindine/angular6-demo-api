@@ -1,8 +1,10 @@
 const _ = require('lodash');
 const Validator = require('validator');
 
-module.exports = function validateLoginInput(data) {
-  let errors = {};
+module.exports = function validateLoginInput(rawData) {
+  const errors = {};
+
+  const data = _.cloneDeep(rawData);
 
   data.email = !_.isEmpty(data.email) ? data.email : '';
   data.password = !_.isEmpty(data.password) ? data.password : '';
@@ -17,6 +19,6 @@ module.exports = function validateLoginInput(data) {
 
   return {
     errors,
-    isValid: _.isEmpty(errors)
+    isValid: _.isEmpty(errors),
   };
 };
