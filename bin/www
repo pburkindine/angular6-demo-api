@@ -10,12 +10,15 @@ const app = require('../app');
 const debug = require('debug')('angular6-demo-api:server');
 const http = require('http');
 
+debug('Starting express...');
+
 /**
  * Get port from environment and store in Express.
  */
 
 const port = normalizePort(process.env.PORT || '8081');
 app.set('port', port);
+debug(`Using port ${port}`);
 
 /**
  * Create HTTP server.
