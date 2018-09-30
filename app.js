@@ -33,7 +33,7 @@ app.use('/api/auth', authRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  res.status(404).json({ msg: 'No such route' });
 });
 
 // Error handler
