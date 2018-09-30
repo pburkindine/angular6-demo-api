@@ -1,7 +1,6 @@
-const createError = require('http-errors');
 const debug = require('debug')('angular6-demo-api:server');
 const express = require('express');
-const logger = require('morgan');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
@@ -19,20 +18,22 @@ mongoose
 
 // Routers
 const authRouter = require('./routes/auth');
+const logRouter = require('./routes/log');
 
 // Middleware
 const app = express();
 app.use(cors());
 app.use(passport.initialize());
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/log', logRouter);
 
 // Catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).json({ msg: 'No such route' });
 });
 

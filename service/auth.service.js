@@ -61,10 +61,16 @@ module.exports.loginHandler = (req, res) => {
 
         User.updateLastLogin(user);
 
-        res.json({ token: `JWT ${token}`, lastLogin });
+        res.json({ token: `Bearer ${token}`, lastLogin });
       });
     }
   );
+};
+
+module.exports.logoutHandler = (req, res) => {
+  // TODO JWT blacklisting unimplemented; no redis in the stack yet
+
+  res.send();
 };
 
 module.exports.registerHandler = (req, res) => {
