@@ -18,7 +18,6 @@ const validateLoginPayload = require('../validations/auth/login');
 module.exports.loginHandler = (req, res) => {
   const { errors, isValid } = validateLoginPayload(req.body);
 
-  // Check Validation
   if (!isValid) {
     return res.status(400).json({ errors });
   }
@@ -57,7 +56,7 @@ module.exports.loginHandler = (req, res) => {
 
         // eslint-disable-next-line prefer-destructuring
         const lastLogin = user.lastLogin;
-        const token = jwt.sign(payload, config.secret);
+        const token = jwt.sign(payload, config.secret, { expiresIn: '30m' });
 
         User.updateLastLogin(user);
 
@@ -76,7 +75,6 @@ module.exports.logoutHandler = (req, res) => {
 module.exports.registerHandler = (req, res) => {
   const { errors, isValid } = validateRegisterPayload(req.body);
 
-  // Check Validation
   if (!isValid) {
     return res.status(400).json({ errors });
   }

@@ -19,6 +19,7 @@ mongoose
 // Routers
 const authRouter = require('./routes/auth');
 const logRouter = require('./routes/log');
+const sporkRouter = require('./routes/spork');
 
 // Middleware
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/log', logRouter);
+app.use('/api/spork', sporkRouter);
 
 // Catch 404 and forward to error handler
 app.use((req, res) => {
